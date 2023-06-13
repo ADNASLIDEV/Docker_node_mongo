@@ -2,5 +2,25 @@ services:
   backend:
     build: ./backend/
     container_name: backend
+    depends_on:
+      - database
     ports:
       - "3000:3000"
+    networks:
+      - mynetwork
+
+  database:
+    build: ./db/
+    container_name: mongo
+    ports:
+      - "7595:7595"
+    networks:
+      - mynetwork
+    volumes:
+      - mongo_volume:/data/db/
+
+networks:
+  mynetwork:
+
+volumes:
+  mongo_volume:
